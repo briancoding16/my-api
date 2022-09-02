@@ -1,5 +1,5 @@
 const faker = require('faker');
-
+const boom = require('@hapi/boom')
 
 
 const getAllProducts =  (req, res) => {
@@ -24,9 +24,9 @@ const getAllProducts =  (req, res) => {
 
 
 const createnewProduct = (req, res) =>{
+
  try {
   const body = req.body
-  console.log(body)
   res.json({
     ok:true,
     data: body
@@ -39,7 +39,11 @@ const createnewProduct = (req, res) =>{
 
 const updateProduct = (req, res) =>{
   try {
+
   const {id} = req.params
+  if(id != 1) {
+    throw boom.notFound('product not found')
+  }
   const body = req.body
   res.json({
     message: 'success',
@@ -51,10 +55,10 @@ const updateProduct = (req, res) =>{
   }
 }
 
-const deleteProduct = (res, req) => {
+const deleteProduct = (req, res) => {
  try {
   const {id} = req.params
-  res.json({
+ res.json( {
     message: 'delete',
     id,
   })
@@ -66,7 +70,7 @@ const deleteProduct = (res, req) => {
 
 const getOneProduct = (res, req) => {
  try {
-  const {id} = req.params
+  let {id } = req.params
   res.json({
     'id': id,
     'name':'Teclado',

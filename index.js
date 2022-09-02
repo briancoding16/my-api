@@ -1,4 +1,5 @@
 const express = require('express');
+const {errorLogs, handlerError} = require('./middleware/error.handler')
 const apiRouter = require('./server');
 const app = express();
 const port = 3000
@@ -10,6 +11,10 @@ app.get('/',(req, res)=> {
 })
 
 apiRouter(app)
+
+
+app.use(handlerError)
+app.use(errorLogs)
 
 
 app.listen(port, (req, res)=>{

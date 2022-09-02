@@ -3,9 +3,13 @@ const productServices = require('../services/servicesProducts')
 const router = express.Router()
 
 
-router.get('/',  async (req, res)=> {
-  const products = await productServices.getAllProducts(req, res)
-  res.json(products)
+router.get('/',  async (req, res, next)=> {
+    try {
+    const products = await productServices.getAllProducts(req, res)
+    res.json(products)
+    } catch (error) {
+      next(error)
+    }
 
 })
 
@@ -17,18 +21,19 @@ router.post('/', async (req, res)=>{
 
 router.patch('/:id',  async (req, res)=>{
   const updateProduct = await productServices.updateProduct(req, res)
-  res.json(updateProduct)
+  return updateProduct
 })
 
 
-router.delete('/:id', async (req, res)=>{
-  const updateproduct = await productServices.updateProduct(req, res)
-  return updateproduct
+router.delete('/:id',  (req, res)=>{
+  productServices.deleteProduct(req, res)
+
 })
 
 
 router.get('/:id', async(req, res)=> {
   const getOneProduct = await productServices.getOneProduct(req, res)
+  console.log(getOneProduct)
   return getOneProduct
 })
 
