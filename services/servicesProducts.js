@@ -39,11 +39,7 @@ const createnewProduct = (req, res) =>{
 
 const updateProduct = (req, res) =>{
   try {
-
   const {id} = req.params
-  if(id != 1) {
-    throw boom.notFound('product not found')
-  }
   const body = req.body
   res.json({
     message: 'success',
@@ -68,7 +64,7 @@ const deleteProduct = (req, res) => {
 }
 
 
-const getOneProduct = (res, req) => {
+const getOneProduct = (req, res) => {
  try {
   let {id } = req.params
   res.json({

@@ -1,6 +1,8 @@
 const express = require('express');
 const productServices = require('../services/servicesProducts')
 const router = express.Router()
+const validatorHendler = require('../middleware/validator.hendler')
+const {schemaProductCreate, updateSchemaProduct,getProductSchema} = require('../schema/schemaProduct')
 
 
 router.get('/',  async (req, res, next)=> {
@@ -14,12 +16,16 @@ router.get('/',  async (req, res, next)=> {
 })
 
 
-router.post('/', async (req, res)=>{
+router.post('/', validatorHendler(schemaProductCreate, 'body'),
+ async (req, res)=>{
  const createProduct = await productServices.createnewProduct(req,res)
  return createProduct
 })
 
-router.patch('/:id',  async (req, res)=>{
+router.patch('/:id',
+  validatorHendler(getProductSchema, 'params'),
+  validatorHendler(updateSchemaProduct, 'body'),
+  async (req, res)=>{
   const updateProduct = await productServices.updateProduct(req, res)
   return updateProduct
 })
@@ -31,9 +37,9 @@ router.delete('/:id',  (req, res)=>{
 })
 
 
-router.get('/:id', async(req, res)=> {
+router.get('/:id', validatorHendler(getProductSchema, 'params'),
+  async(req, res)=> {
   const getOneProduct = await productServices.getOneProduct(req, res)
-  console.log(getOneProduct)
   return getOneProduct
 })
 
