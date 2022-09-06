@@ -1,6 +1,6 @@
 const faker = require('faker');
 const boom = require('@hapi/boom')
-
+// import { v4 as uuidv4 } from 'uuid';
 
 const getAllProducts =  (req, res) => {
   try {
@@ -44,7 +44,7 @@ const updateProduct = (req, res) =>{
   res.json({
     message: 'success',
     product: body,
-    id,
+    id
   })
   } catch (error) {
     console.log(error)
@@ -66,12 +66,10 @@ const deleteProduct = (req, res) => {
 
 const getOneProduct = (req, res) => {
  try {
+  console.log(req.body)
   let {id } = req.params
   res.json({
-    'id': id,
-    'name':'Teclado',
-    'price':2000,
-    'category': 'tecnology'
+    id,
   })
  } catch (error) {
   console.log(error)
