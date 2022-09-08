@@ -1,11 +1,13 @@
-const pool = require('../libs/postgres')
+const sequelize = require('../libs/sequelize')
 
 
 const getAllProducts = async (req, res) => {
   try {
     const query = 'SELECT * FROM tasks'
-    const response = await pool.query(query)
-    return response.rows
+    const [data] = await sequelize.query(query)
+    return {
+      data
+    }
   } catch (error) {
     console.log(error)
   }
