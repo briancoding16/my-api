@@ -1,8 +1,8 @@
-const pool = require('../libs/postgres')
+const getConnection = require('../libs/postgres')
 
 const getAllUsers = async (req, res) =>{
-  const query = 'SELECT * FROM  task '
-  const {} =  await pool.query(query)
+  const client = await getConnection()
+  const response =  await client.query('SELECT * FROM  tasks')
   return response.rows;
 }
 
