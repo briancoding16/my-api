@@ -1,12 +1,13 @@
 version: '3.3'
 
+
 services:
   postgres:
     image: postgres:13
     environment:
-      - POSTGRES_DB=my_api
+      - POSTGRES_DB=my_app
       - POSTGRES_USER=brian
-      - POSTGRES_PASSWORD=admin1234
+      - POSTGRES_PASSWORD=admin123
     ports:
       - 5432:5432
     volumes:
@@ -15,7 +16,7 @@ services:
   pgadmin:
     image: dpage/pgadmin4
     environment:
-      - PGADMIN_DEFAULT_EMAIL=admin@gmail.com
+      - PGADMIN_DEFAULT_EMAIL=admin@mail.com
       - PGADMIN_DEFAULT_PASSWORD=root
     ports:
       - 5050:80
