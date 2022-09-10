@@ -1,8 +1,11 @@
 const express = require('express');
 const servicesUsers = require('../services/servicesUsers')
 const router = express.Router()
-const validatorHandler = require('../middleware/validator.hendler')
-const { schemaProductCreate } = require('../schema/schemaProduct')
+const {createUserSchema, updateUserSchema,getUserSchema } = require('../schema/schemaUsers')
+const validatorHendler = require('../middleware/validator.hendler')
+
+
+
 
 router.get('/', async (req, res, next)=> {
  try {
@@ -13,7 +16,7 @@ router.get('/', async (req, res, next)=> {
  }
 })
 
-router.get('/:id',
+router.get('/:id', validatorHendler(getUserSchema, 'params'),
   async (req, res, next)=> {
   try {
    const {id} = req.params
@@ -28,7 +31,8 @@ router.get('/:id',
 
 
 
-router.post('/', async(req, res, next)=>{
+router.post('/', validatorHendler(createUserSchema, 'body'),
+  async(req, res, next)=>{
   try {
     const body = req.body
     const newUser = await servicesUsers.createUser(body)
@@ -39,7 +43,8 @@ router.post('/', async(req, res, next)=>{
 })
 
 
-router.patch('/:id', async(req, res, next)=>{
+router.patch('/:id',validatorHendler(updateUserSchema, 'params'),
+async(req, res, next)=>{
 try {
   const {id} = req.params
   const body = req.body
