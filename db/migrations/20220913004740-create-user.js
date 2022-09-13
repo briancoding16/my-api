@@ -1,6 +1,6 @@
 'use strict';
 
-const {UserSchema, USER_TABLE} = require('../user.model')
+const {UserSchema, USER_TABLE} = require('../models/user.model')
 
 
 module.exports = {
