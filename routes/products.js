@@ -15,6 +15,11 @@ router.get('/',  async (req, res, next)=> {
 
 })
 
+router.get('/:id', validatorHendler(getProductSchema, 'params'),
+  async(req, res)=> {
+  const getOneProduct = await productServices.getOneProduct(req, res)
+  return getOneProduct
+})
 
 router.post('/', validatorHendler(schemaProductCreate, 'body'),
  async (req, res)=>{
@@ -37,11 +42,7 @@ router.delete('/:id',  (req, res)=>{
 })
 
 
-router.get('/:id', validatorHendler(getProductSchema, 'params'),
-  async(req, res)=> {
-  const getOneProduct = await productServices.getOneProduct(req, res)
-  return getOneProduct
-})
+
 
 
 module.exports = router;
