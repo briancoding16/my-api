@@ -7,6 +7,7 @@ function  setupModels (sequelize) {
   Client.init(ClientSchema, Client.config(sequelize))
 
 
+  User.associate(sequelize.models)
   Client.associate(sequelize.models)
 
 }

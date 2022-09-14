@@ -4,7 +4,9 @@ const {models} = require('../libs/sequelize')
 
 
 const getClients = async () =>{
-  const response = await models.Client.findAll()
+  const response = await models.Client.findAll({
+    include: ['User']
+  })
   return response
 }
 
@@ -24,8 +26,12 @@ const findOne = async (id)=>{
 const createClient = async (body) => {
   try {
     console.log(body)
-    const newClient = await models.Client.create(body)
-    console.log(newClient)
+    const newUser = await models.User.create(body.user)
+    const newClient = await models.Client.create({
+      ...body,
+      userId: newUser.id
+
+    })
     return newClient
   } catch (error) {
     console.log(error)

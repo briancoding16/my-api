@@ -36,8 +36,9 @@ router.post('/', validatorHendler(createClientSchema, 'body'),
   try {
     const body = req.body
     const newClient = await servicesClient.createClient(body)
-    return {newClient}
+    return res.send(newClient)
   } catch (error) {
+    res.send(error)
     next(error)
   }
 })
