@@ -56,7 +56,8 @@ const ProductSchema = {
 
     static config(sequelize){
       return {
-        tableName: 'PRODUCT_TABLE',
+        sequelize,
+        tableName: PRODUCT_TABLE,
         modelName: 'Product',
         timestamps: false
       }

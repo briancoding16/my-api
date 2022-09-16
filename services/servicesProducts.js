@@ -1,10 +1,13 @@
 const sequelize = require('../libs/sequelize')
+const { models } = require('../libs/sequelize');
 
 
-const getAllProducts = async (req, res) => {
+
+const getAllProducts = async () => {
   try {
-    const query = 'SELECT * FROM tasks'
-    const [data] = await sequelize.query(query)
+    const data = await models.Product.findAll({
+      include: ['category']
+    })
     return {
       data
     }
@@ -15,54 +18,55 @@ const getAllProducts = async (req, res) => {
 }
 
 
-const createnewProduct = (req, res) =>{
-
+const createnewProduct = async (body) =>{
  try {
-  const body = req.body
-  res.json({
-    ok:true,
-    data: body
-  })
+  console.log(body)
+  const newCategory = await models.Product.create(body)
+  return newCategory
  } catch (error) {
   console.log(error)
  }
 
 }
 
-const updateProduct = (req, res) =>{
+const updateProduct = async (id, body) =>{
   try {
-  const {id} = req.params
-  const body = req.body
-  res.json({
-    message: 'success',
-    product: body,
-    id
-  })
+    const category = await models.Product.findByPk(id)
+    if (!category) {
+      return {
+        error: 'category not found'
+      }
+    }
+    const response = await category.update(body)
+    return response
   } catch (error) {
     console.log(error)
   }
 }
 
-const deleteProduct = (req, res) => {
+const deleteProduct = async (id) => {
  try {
-  const {id} = req.params
- res.json( {
-    message: 'delete',
-    id,
-  })
+  const category = await models.Product.findOne(id)
+  await category.destroy()
+  return {
+    message: 'category delete',
+    id
+  }
  } catch (error) {
   console.log(error)
  }
 }
 
 
-const getOneProduct = (req, res) => {
+const getOneProduct = async (id) => {
  try {
-  console.log(req.body)
-  let {id } = req.params
-  res.json({
-    id,
-  })
+  const product = await models.Product.findOne(id)
+  if(!product){
+    return {
+      message: 'product not found'
+    }
+  }
+  return product
  } catch (error) {
   console.log(error)
  }

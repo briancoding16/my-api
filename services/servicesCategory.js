@@ -16,7 +16,9 @@ const allCategory = async () => {
 
 const oneCategory = async (id) => {
   try {
-    const categoryOne = await models.Category.findByPk(id);
+    const categoryOne = await models.Category.findByPk(id, {
+      include: ['products']
+    });
     return categoryOne;
   } catch (error) {
     console.log(error);

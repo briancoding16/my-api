@@ -1,21 +1,25 @@
 const Joi = require('joi');
 
-const id = Joi.string().uuid()
+const id = Joi.number().integer()
 const name = Joi.string().alphanum().min(3).max(10)
 const price = Joi.number().integer().min(10)
 const details = Joi.string().min(10)
+const categoryId = Joi.number().integer()
 
 const schemaProductCreate = Joi.object({
   name: name.required(),
   price: price.required(),
-  details: details.required()
+  description: details.required(),
+  categoryId: categoryId.required()
+
 })
 
 
 const updateSchemaProduct = Joi.object({
   name: name,
   price: price,
-  details: details
+  details: details,
+  categoryId: categoryId
 })
 
 
